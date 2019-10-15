@@ -1,5 +1,4 @@
 import { MenuTheme } from 'antd/lib/menu/MenuContext';
-import { BarChartOutline } from '@ant-design/icons';
 import logo from '@/assets/logo.svg';
 
 export type ContentWidth = 'Fluid' | 'Fixed';
@@ -57,34 +56,6 @@ export default {
   },
   title: '易佰数据',
   pwa: false,
-  iconfontUrl: '',
+  iconfontUrl: '//at.alicdn.com/t/font_1458401_efdyfkeqel5.js',
   logo,
-  route: {
-    path: '/',
-    routes: [
-      {
-        path: '/',
-        name: 'welcome',
-        icon: 'barchart',
-        routes: [
-          {
-            path: '/welcome',
-            name: 'one',
-            icon: '/favicon.png',
-            routes: [
-              {
-                path: '/welcome/welcome',
-                name: 'two',
-                icon: 'smile',
-                exact: true,
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  location: {
-    pathname: '/',
-  },
 } as DefaultSettings;

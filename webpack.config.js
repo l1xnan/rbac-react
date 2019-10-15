@@ -15,7 +15,6 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const postcssPresetEnv = require('postcss-preset-env');
 const WebpackBar = require('webpackbar');
-const OfflinePlugin = require('offline-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -54,7 +53,7 @@ module.exports = {
     contentBase: [path.join(__dirname, 'public'), __dirname],
     proxy: [
       {
-        context: ['/static', '/api', '/_api', '/images'],
+        context: ['/api', '/_api', '/images'],
         target: 'http://127.0.0.1:5000',
       },
     ],
@@ -167,14 +166,16 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new DashboardPlugin(),
     new SimpleWebpackCdnPlugin({
-      modules: [
-        'react',
-        'react-dom',
-        // 'react-router-dom',
-        // 'axios',
-        // 'moment',
-        // 'echarts',
-      ],
+      modules: isDev
+        ? []
+        : [
+            'react',
+            'react-dom',
+            'react-router-dom',
+            'axios',
+            'moment',
+            'echarts',
+          ],
       prod: !isDev,
       publicPath: '/node_modules',
     }),
@@ -191,9 +192,6 @@ if (!isDev) {
     }),
     new webpack.HashedModuleIdsPlugin(),
     new CleanWebpackPlugin(),
-    // new OfflinePlugin({
-    //   externals: ['/'],
-    // }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css\.*(?!.*map)/g,
       cssProcessor: require('cssnano'),

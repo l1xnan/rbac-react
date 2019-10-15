@@ -10,11 +10,13 @@ const CDN_MODULES = {
     name: 'react',
     var: 'React',
     path: 'umd/react.production.min.js',
+    dev: 'umd/react.development.js',
   },
   'react-dom': {
     name: 'react-dom',
     var: 'ReactDOM',
     path: 'umd/react-dom.production.min.js',
+    dev: 'umd/react-dom.development.js',
   },
   'react-router-dom': {
     name: 'react-router-dom',
@@ -47,6 +49,7 @@ const CDN_MODULES = {
       var: 'moment',
       cdn: 'moment',
       path: 'min/moment.min.js',
+      dev: 'moment.js',
     },
     {
       name: 'moment',
@@ -60,13 +63,16 @@ const CDN_MODULES = {
 const jsdelivrProdUrl = '//cdn.jsdelivr.net/npm/:name@:version/:path';
 
 class SimpleWebpackCdnPlugin extends WebpackCdnPlugin {
-  constructor({ modules, prodUrl, ...rest }) {
+  constructor({ modules, prodUrl, prod, ...rest }) {
     super({
       ...rest,
+      prod,
       prodUrl: prodUrl || jsdelivrProdUrl,
-      modules: modules.map(item =>
-        typeof item === 'string' ? CDN_MODULES[item] : item,
-      ),
+      modules: modules.map(item => {
+        const { path, dev, ...rest } =
+          typeof item === 'string' ? CDN_MODULES[item] : item;
+        return prod ? item : { path: dev || path, ...rest };
+      }),
     });
   }
 }

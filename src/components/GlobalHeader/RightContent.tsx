@@ -1,9 +1,8 @@
 import { Tooltip } from 'antd';
 import React from 'react';
 
-import { QuestionCircleFill } from '@ant-design/icons';
+import { QuestionCircle } from '@ant-design/icons';
 
-import HeaderSearch from '../HeaderSearch';
 // import Avatar from './AvatarDropdown';
 import styles from './index.m.less';
 
@@ -23,17 +22,6 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = props => {
 
   return (
     <div className={className}>
-      <HeaderSearch
-        className={`${styles.action} ${styles.search}`}
-        placeholder={'搜索'}
-        dataSource={['123', '125']}
-        onSearch={value => {
-          console.log('input', value);
-        }}
-        onPressEnter={value => {
-          console.log('enter', value);
-        }}
-      />
       <Tooltip title={'帮助'}>
         <a
           target="_blank"
@@ -41,7 +29,7 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = props => {
           rel="noopener noreferrer"
           className={styles.action}
         >
-          <QuestionCircleFill />
+          <QuestionCircle />
         </a>
       </Tooltip>
       {/* <Avatar /> */}
